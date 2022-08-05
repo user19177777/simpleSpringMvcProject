@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show message from id</title>
+</head>
+<body>
+<p th:text="${message.getText()}"></p>
+ <p th:text="${message.getId()}"></p>
+     <a th:href="@{/messages/{id}/edit(id=${message.getId()})}">Edit text of the message</a>
+<form th:method="DELETE" th:action="@{/messages/{id}(id=${message.getId()})}">
+    <input type="submit" value="Delete">
+</form>
+</body>
+</html>
