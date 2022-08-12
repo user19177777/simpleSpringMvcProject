@@ -12,9 +12,9 @@ public class PersonDAO {
     private List<Person> people;
     {
         people = new ArrayList<>();
-        people.add(new Person(++PEOPLE_COUNT,"Tom"));
-        people.add(new Person(++PEOPLE_COUNT,"Den"));
-        people.add(new Person(++PEOPLE_COUNT,"Bob"));
+        people.add(new Person(++PEOPLE_COUNT,"Tom",20,"sdf@fdg.ru"));
+        people.add(new Person(++PEOPLE_COUNT,"Den",25,"sdf@fdg.ru"));
+        people.add(new Person(++PEOPLE_COUNT,"Bob",28,"sdf@fdg.ru"));
     }
     //READ CRUD
     public List<Person> index(){
@@ -33,6 +33,8 @@ public class PersonDAO {
     public void update(int id,Person updatedPerson){
         Person personToBeUpdated = show(id);
         personToBeUpdated.setName(updatedPerson.getName());
+        personToBeUpdated.setAge(updatedPerson.getAge());
+        personToBeUpdated.setEmail(updatedPerson.getEmail());
     }
     //DELETE CRUD
     public void delete(int id){
