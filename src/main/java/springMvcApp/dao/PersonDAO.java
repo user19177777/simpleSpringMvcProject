@@ -35,7 +35,7 @@ public class PersonDAO {
     public List<Person> index()  {
         List<Person>people = new ArrayList<>();
         try {
-            //создает объект для sql запроса
+            //создает объект для sql запроса,sql injection
             Statement statement = connection.createStatement();
             String SQL = "SELECT * FROM person";
             //помещает результат запроса в resultSet,запрос не меняет данные в базе
@@ -57,16 +57,36 @@ public class PersonDAO {
     }
     //READ CRUD
     public Person show (int id){
-
-        return null;
+        Person person = null;
+        try {
+            //быстрее Statement(компилируется один раз),безопаснее
+            PreparedStatement preparedStatement = connection.prepareStatement(
+              "SELECT * FROM Person WHERE id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            person = new Person();
+            person.setId(resultSet.getInt("id"));
+            person.setName(resultSet.getString("name"));
+            person.setAge(resultSet.getInt("age"));
+            person.setEmail(resultSet.getString("email"));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return person;
     }
     //CREATE CRUD
     public void save(Person person){
         try {
-            Statement statement = connection.createStatement();
-            String SQL = "INSERT INTO Person VALUES(" + 1 + ",'" + person.getName() + "'," + person.getAge() + ",'" + person.getEmail() + "')";
+            PreparedStatement preparedStatement = connection.prepareStatement(
+            "INSERT INTO Person VALUES (?,?,?,?)"
+            );
+            preparedStatement.setInt(1,person.getId());
+            preparedStatement.setString(2,person.getName());
+            preparedStatement.setInt(3,person.getAge());
+            preparedStatement.setString(4,person.getEmail());
             //меняет данные в базе(создает запись в базе)
-            statement.executeUpdate(SQL);
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
