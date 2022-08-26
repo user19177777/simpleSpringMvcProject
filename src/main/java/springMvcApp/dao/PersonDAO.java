@@ -11,6 +11,7 @@ import springMvcApp.models.Person;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
@@ -28,6 +29,12 @@ public class PersonDAO {
         return jdbcTemplate.query("SELECT * FROM person",new BeanPropertyRowMapper<>(Person.class));
     }
     //READ CRUD
+    //Optional<> класс обертка, может существовать , а может и нет
+    public Optional<Person> show(String email){
+        return jdbcTemplate.query("SELECT * FROM Person WHERE email=?",new Object[]{email},
+                new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+    }
+
     public Person show (int id){
         return jdbcTemplate.query("SELECT * FROM Person WHERE id=?",new Object[]{id},new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
     }
@@ -74,7 +81,7 @@ public class PersonDAO {
         System.out.println("Time: "+(after-before));
     }
     //batch insert in db
-    @Transactional
+    //@Transactional
     public void testBatchUpdate(){
 
         List<Person>people = create1000People();
@@ -100,4 +107,6 @@ public class PersonDAO {
         long after = System.currentTimeMillis();
         System.out.println("Time: "+(after-before));
     }
+
+
 }
