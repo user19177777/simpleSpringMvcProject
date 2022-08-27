@@ -57,7 +57,7 @@ public class PersonDAO {
     public List<Person>create1000People(){
         long before = System.currentTimeMillis();
         List<Person>people = new ArrayList<>();
-        for (int i=0;i<1000;i++){
+        for (int i=0;i<10;i++){
             people.add(new Person(i,"Name"+i,30,"test"+i+"@mail.ru", "address"));
         }
         long after = System.currentTimeMillis();
@@ -87,7 +87,7 @@ public class PersonDAO {
 
         long before = System.currentTimeMillis();
 
-            jdbcTemplate.batchUpdate("INSERT INTO Person (name,age,email) VALUES (?,?,?)",
+            jdbcTemplate.batchUpdate("INSERT INTO Person (name,age,email,address) VALUES (?,?,?,?)",
                     new BatchPreparedStatementSetter() {
                         @Override
                         public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
@@ -95,6 +95,7 @@ public class PersonDAO {
                             preparedStatement.setString(1,people.get(i).getName());
                             preparedStatement.setInt(2,people.get(i).getAge());
                             preparedStatement.setString(3,people.get(i).getEmail());
+                            preparedStatement.setString(4,people.get(i).getAddress());
                         }
 
                         @Override
