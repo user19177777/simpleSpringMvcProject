@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import springMvcApp.models.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
@@ -31,12 +32,12 @@ public class PersonDAO {
     public void save(Person person){
         //для передачи параметров в запрос используется var args,а не массив Object[]
         jdbcTemplate.update("INSERT INTO Person(fio,year_of_birth) VALUES (?,?)",
-                person.getFio(),person.getDateOfBirth());
+                person.getFio(),person.getYearOfBirth());
     }
     //UPDATE CRUD
     public void update(int id,Person updatedPerson){
         jdbcTemplate.update("UPDATE Person SET fio=?,year_of_birth=? WHERE id=?",
-                updatedPerson.getFio(),updatedPerson.getDateOfBirth(),id);
+                updatedPerson.getFio(),updatedPerson.getYearOfBirth(),id);
     }
     //DELETE CRUD
     public void delete(int id){

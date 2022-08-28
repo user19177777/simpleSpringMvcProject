@@ -17,17 +17,17 @@ public class Person {
     public Person() {
     }
 
-    public Person(int id, String name, int age) {
+    public Person(int id, String fio, int yearOfBirth) {
         this.id = id;
-        this.fio = name;
-        this.yearOfBirth = age;
+        this.fio = fio;
+        this.yearOfBirth = yearOfBirth;
     }
 
-    public int getDateOfBirth() {
+    public int getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setDateOfBirth(int age) {
+    public void setYearOfBirth(int age) {
         this.yearOfBirth = age;
     }
 
