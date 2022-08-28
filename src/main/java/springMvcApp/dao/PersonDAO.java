@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import springMvcApp.models.Person;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -32,13 +30,13 @@ public class PersonDAO {
     //CREATE CRUD
     public void save(Person person){
         //для передачи параметров в запрос используется var args,а не массив Object[]
-        jdbcTemplate.update("INSERT INTO Person VALUES (?,?,?,?)",
-                person.getId(),person.getName(),person.getAge(),person.getEmail());
+        jdbcTemplate.update("INSERT INTO Person(fio,date_of_birth) VALUES (?,?)",
+                person.getFio(),person.getDateOfBirth());
     }
     //UPDATE CRUD
     public void update(int id,Person updatedPerson){
-        jdbcTemplate.update("UPDATE Person SET name=?,age=?,email=?WHERE id=?",
-                updatedPerson.getName(),updatedPerson.getAge(),updatedPerson.getEmail(),id);
+        jdbcTemplate.update("UPDATE Person SET name=?,age=? WHERE id=?",
+                updatedPerson.getFio(),updatedPerson.getDateOfBirth(),id);
     }
     //DELETE CRUD
     public void delete(int id){
