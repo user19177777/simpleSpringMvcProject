@@ -12,7 +12,7 @@ public class Person {
 
     private String fio;
     @Min(value = 1900,message = "Should be greater than 1900")
-    private int dateOfBirth;
+    private int yearOfBirth;
 
     public Person() {
     }
@@ -20,15 +20,15 @@ public class Person {
     public Person(int id, String name, int age) {
         this.id = id;
         this.fio = name;
-        this.dateOfBirth = age;
+        this.yearOfBirth = age;
     }
 
     public int getDateOfBirth() {
-        return dateOfBirth;
+        return yearOfBirth;
     }
 
     public void setDateOfBirth(int age) {
-        this.dateOfBirth = age;
+        this.yearOfBirth = age;
     }
 
     public int getId() {

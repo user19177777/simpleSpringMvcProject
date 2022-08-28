@@ -11,8 +11,8 @@
     <div style="color: red" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}"></div>
     <br/>
     <label for="age">Enter year of the birthday: </label>
-    <input type="text" th:field="*{dateOfBirth}" id="age"/>
-    <div style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></div>
+    <input type="text" th:field="*{yearOfBirth}" id="age"/>
+    <div style="color: red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}"></div>
     <br/>
     <input type="submit" value="Update!"/>
 </form>
