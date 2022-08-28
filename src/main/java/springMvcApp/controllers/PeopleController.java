@@ -52,11 +52,6 @@ public class PeopleController {
         personDAO.save(person);
         return "redirect:/people";
     }
-    //помещает данные в модели всех методов контроллера
-    @ModelAttribute("message")
-    public String message(){
-        return "Don't forget!";
-    }
     //показывает форму редактирования
     @GetMapping("/{id}/edit")
     public String edit(Model model,@PathVariable("id")int id){

@@ -29,6 +29,7 @@ public class MySpringMvcDispatcherServletInitialiazer extends AbstractAnnotation
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException, ServletException {
         super.onStartup(aServletContext);
+        registerCharacterEncodingFilter(aServletContext);
         registerHiddenFieldFilter(aServletContext);
     }
 

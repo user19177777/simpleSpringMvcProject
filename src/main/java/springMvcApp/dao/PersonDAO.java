@@ -30,12 +30,12 @@ public class PersonDAO {
     //CREATE CRUD
     public void save(Person person){
         //для передачи параметров в запрос используется var args,а не массив Object[]
-        jdbcTemplate.update("INSERT INTO Person(fio,date_of_birth) VALUES (?,?)",
+        jdbcTemplate.update("INSERT INTO Person(fio,year_of_birth) VALUES (?,?)",
                 person.getFio(),person.getDateOfBirth());
     }
     //UPDATE CRUD
     public void update(int id,Person updatedPerson){
-        jdbcTemplate.update("UPDATE Person SET name=?,age=? WHERE id=?",
+        jdbcTemplate.update("UPDATE Person SET name=?,year_of_birth=? WHERE id=?",
                 updatedPerson.getFio(),updatedPerson.getDateOfBirth(),id);
     }
     //DELETE CRUD
