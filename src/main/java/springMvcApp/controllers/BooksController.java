@@ -3,9 +3,12 @@ package springMvcApp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springMvcApp.dao.BookDAO;
 import springMvcApp.models.Book;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/books")
@@ -24,7 +27,6 @@ public class BooksController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id")int id,Model model){
-        System.out.println(id);
         model.addAttribute("book",bookDAO.show(id));
         return "books/show";
     }
@@ -35,7 +37,10 @@ public class BooksController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("book")Book book){
+    public String create(@ModelAttribute("book")@Valid Book book,
+                         BindingResult bindingResult){
+        if (bindingResult.hasErrors())
+            return "books/new";
         bookDAO.save(book);
         return "redirect:/books";
     }
@@ -47,7 +52,11 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("book")Book book,@PathVariable("id")int id){
+    public String update(@ModelAttribute("book")@Valid Book book,
+                         BindingResult bindingResult,
+                         @PathVariable("id")int id){
+        if (bindingResult.hasErrors())
+            return "books/edit";
         bookDAO.update(id,book);
         return "redirect:/books";
     }

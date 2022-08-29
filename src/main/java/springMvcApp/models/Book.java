@@ -1,5 +1,6 @@
 package springMvcApp.models;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 public class Book {
@@ -8,7 +9,7 @@ public class Book {
     private String title;
     @NotEmpty(message = "Should be not empty")
     private String author;
-    @NotEmpty(message = "Should be not empty")
+    @Min(value = 1500,message = "Must be more 1500")
     private int year;
 
     public Book() {
