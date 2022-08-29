@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 public class Person {
     private int id;
     @NotEmpty(message = "Should be not empty")
-
     private String fio;
     @Min(value = 1900,message = "Should be greater than 1900")
     private int yearOfBirth;
