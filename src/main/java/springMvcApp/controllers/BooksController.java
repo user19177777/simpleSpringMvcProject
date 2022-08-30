@@ -6,17 +6,22 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springMvcApp.dao.BookDAO;
+import springMvcApp.dao.PersonDAO;
 import springMvcApp.models.Book;
+import springMvcApp.models.Person;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/books")
 public class BooksController {
     private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
     @Autowired
-    public BooksController(BookDAO bookDAO) {
+    public BooksController(BookDAO bookDAO, PersonDAO personDAO) {
         this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
     }
 
     @GetMapping
@@ -26,8 +31,14 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id")int id,Model model){
+    public String show(@PathVariable("id")int id, Model model, @ModelAttribute("person")Person person){
         model.addAttribute("book",bookDAO.show(id));
+
+        Optional<Person> bookOwner = bookDAO.getBookOwner(id);
+        if (bookOwner.isPresent())
+            model.addAttribute("owner",bookOwner.get());
+        else
+            model.addAttribute("people",personDAO.index());
         return "books/show";
     }
 
@@ -65,5 +76,21 @@ public class BooksController {
     public String delete(@PathVariable("id")int id){
         bookDAO.delete(id);
         return "redirect:/books";
+    }
+
+    //освободить книгу
+    @PatchMapping("/{id}/release")
+    public String release(@PathVariable("id")int id){
+        bookDAO.release(id);
+        //redirect на страницу книги с id
+        return "redirect:/books/"+id;
+    }
+
+    //назначить книгу выбранному человеку
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id")int id,@ModelAttribute("person")Person selectedPerson){
+        //назначено только id у selectedPerson, остальные поля - null
+        bookDAO.assign(id,selectedPerson);
+        return "redirect:/books/"+id;
     }
 }

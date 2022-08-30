@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import springMvcApp.models.Book;
 import springMvcApp.models.Person;
 
 import java.util.List;
@@ -42,5 +43,11 @@ public class PersonDAO {
     //DELETE CRUD
     public void delete(int id){
         jdbcTemplate.update("DELETE FROM Person WHERE id=?",id);
+    }
+
+    //получить список книг по id человека
+    public List<Book> getBooksByPersonId(int id){
+        return jdbcTemplate.query("SELECT * FROM Book WHERE person_id=?",
+                new Object[]{id},new BeanPropertyRowMapper<>(Book.class));
     }
 }
