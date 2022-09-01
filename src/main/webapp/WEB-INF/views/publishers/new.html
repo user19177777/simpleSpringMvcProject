@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New publisher</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/publishers}" th:object="${publisher}">
+    <label for="title">Publisher title: </label>
+    <input type="text" th:field="*{publisher_title}" id="title">
+    <input type="submit" value="Create!">
+</form>
+</body>
+</html>

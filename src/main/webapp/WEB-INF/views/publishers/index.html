@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All publishers</title>
+</head>
+<body>
+<div th:each="publisher:${publishers}">
+    <a th:href="@{/publishers/{id}(id=${publisher.getPublisher_id()})}"
+    th:text="${'Publisher: '+publisher.getPublisher_title()}"></a>
+</div>
+<br>
+<form th:method="GET" th:action="@{/publishers/new}">
+    <input type="submit" value="Create!">
+</form>
+</body>
+</html>
