@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springMvcApp.dao.PersonDAO;
 import springMvcApp.models.Person;
-import springMvcApp.util.PersonValidator;
 
 import javax.validation.Valid;
 
@@ -16,11 +15,9 @@ import javax.validation.Valid;
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonDAO personDAO;
-    private final PersonValidator personValidator;
     @Autowired
-    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
+    public PeopleController(PersonDAO personDAO) {
         this.personDAO = personDAO;
-        this.personValidator = personValidator;
     }
     //URL такой же /people REST URL
     @GetMapping
@@ -50,9 +47,7 @@ public class PeopleController {
             //создает новый объект Person (данные полей берет из URL) и добавляет его в модель
             //@Valid проверяет поля, которые приходят из формы по модели
             @ModelAttribute("person")@Valid Person person, BindingResult bindingResult){
-        personValidator.validate(person,bindingResult);
-        if (bindingResult.hasErrors())
-            return "people/new";
+
         personDAO.save(person);
         return "redirect:/people";
     }
@@ -70,9 +65,7 @@ public class PeopleController {
     //отправляем отредактированные данные
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person")@Valid Person person,BindingResult bindingResult,@PathVariable("id")int id){
-        personValidator.validate(person,bindingResult);
-        if (bindingResult.hasErrors())
-            return "people/edit";
+
         personDAO.update(id,person);
         return "redirect:/people";
     }
