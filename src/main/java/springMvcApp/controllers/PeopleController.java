@@ -6,24 +6,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import springMvcApp.dao.PersonDAO;
 import springMvcApp.models.Person;
+import springMvcApp.services.PeopleService;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private final PersonDAO personDAO;
+    //используем вместо ДАО слой PeopleService(логика приложения), который использует PeopleRepository(слой работы с данными)
+    private final PeopleService peopleService;
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PeopleController(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
     //URL такой же /people REST URL
     @GetMapping
     public String index(Model model){
         //получим всех людей из ДАО и передадим в представление
-        model.addAttribute("people",personDAO.index());
+        model.addAttribute("people",peopleService.findAll());
         return "people/index";
     }
     //REST URL
@@ -33,7 +34,7 @@ public class PeopleController {
             @PathVariable("id")int id,
                        Model model){
         //получим одного человека по id из ДАО и передадим в представление
-        model.addAttribute("person",personDAO.show(id));
+        model.addAttribute("person",peopleService.findOne(id));
         return "people/show";
     }
     @GetMapping("/new")
@@ -48,7 +49,7 @@ public class PeopleController {
             //@Valid проверяет поля, которые приходят из формы по модели
             @ModelAttribute("person")@Valid Person person, BindingResult bindingResult){
 
-        personDAO.save(person);
+        peopleService.save(person);
         return "redirect:/people";
     }
     //помещает данные в модели всех методов контроллера
@@ -59,19 +60,19 @@ public class PeopleController {
     //показывает форму редактирования
     @GetMapping("/{id}/edit")
     public String edit(Model model,@PathVariable("id")int id){
-        model.addAttribute("person",personDAO.show(id));
+        model.addAttribute("person",peopleService.findOne(id));
         return "people/edit";
     }
     //отправляем отредактированные данные
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person")@Valid Person person,BindingResult bindingResult,@PathVariable("id")int id){
 
-        personDAO.update(id,person);
+        peopleService.update(id,person);
         return "redirect:/people";
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
-        personDAO.delete(id);
+        peopleService.delete(id);
         return "redirect:/people";
     }
 }
