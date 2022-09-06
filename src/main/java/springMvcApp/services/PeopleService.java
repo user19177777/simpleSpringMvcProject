@@ -42,4 +42,9 @@ public class PeopleService {
     public void delete(int id){
         peopleRepository.deleteById(id);
     }
+
+    public void findByName(String name){
+        peopleRepository.findByName(name);
+    }
+
 }

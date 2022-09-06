@@ -35,6 +35,7 @@ public class PeopleController {
                        Model model){
         //получим одного человека по id из ДАО и передадим в представление
         model.addAttribute("person",peopleService.findOne(id));
+
         return "people/show";
     }
     @GetMapping("/new")
