@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springMvcApp.dao.PersonDAO;
 import springMvcApp.models.Person;
 import springMvcApp.services.PeopleService;
 
@@ -14,10 +15,12 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
+    private final PersonDAO personDAO;
     //используем вместо ДАО слой PeopleService(логика приложения), который использует PeopleRepository(слой работы с данными)
     private final PeopleService peopleService;
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PersonDAO personDAO, PeopleService peopleService) {
+        this.personDAO = personDAO;
         this.peopleService = peopleService;
     }
     //URL такой же /people REST URL
@@ -25,6 +28,7 @@ public class PeopleController {
     public String index(Model model){
         //получим всех людей из ДАО и передадим в представление
         model.addAttribute("people",peopleService.findAll());
+        personDAO.testNPlus1();
         return "people/index";
     }
     //REST URL
