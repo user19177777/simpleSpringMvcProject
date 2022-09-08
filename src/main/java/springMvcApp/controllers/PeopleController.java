@@ -28,7 +28,6 @@ public class PeopleController {
     public String index(Model model){
         //получим всех людей из ДАО и передадим в представление
         model.addAttribute("people",peopleService.findAll());
-        personDAO.testNPlus1();
         return "people/index";
     }
     //REST URL
@@ -39,7 +38,6 @@ public class PeopleController {
                        Model model){
         //получим одного человека по id из ДАО и передадим в представление
         model.addAttribute("person",peopleService.findOne(id));
-
         return "people/show";
     }
     @GetMapping("/new")
