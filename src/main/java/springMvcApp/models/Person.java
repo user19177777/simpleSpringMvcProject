@@ -1,7 +1,11 @@
 package springMvcApp.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Date;
+
 @Entity
 @Table(name = "Person")
 public class Person {
@@ -25,7 +29,15 @@ public class Person {
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}",message = "" +
             "Address should be in this format: Country, City, Postal code (6 digits)")
     private String address;
-
+    @Column(name = "date_of_birth")
+    //на стороне бд для поля указан DATE
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date dateOfBirth;
+    @Column(name = "created_at")
+    //на стороне бд для поля указан TIMESTAMP, точное время (количество секунд с 1 января 2000)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
     public Person() {
     }
 
@@ -73,5 +85,21 @@ public class Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

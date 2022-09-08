@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import springMvcApp.models.Person;
 import springMvcApp.repositories.PeopleRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class PeopleService {
     @Transactional
     public void save(Person person){
         peopleRepository.save(person);
+        person.setCreatedAt(new Date());
     }
     @Transactional
     public void update(int id,Person updPerson){
