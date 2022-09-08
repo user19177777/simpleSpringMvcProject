@@ -38,6 +38,10 @@ public class Person {
     //на стороне бд для поля указан TIMESTAMP, точное время (количество секунд с 1 января 2000)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    //стоит по умолчанию, назначает числовые индексы с 0, поэтому в поле бд mood int
+    //если EnumType.STRING в бд будет сама строка, в бд поле
+    @Enumerated(EnumType.ORDINAL)
+    private Mood mood;
     public Person() {
     }
 
@@ -101,5 +105,13 @@ public class Person {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
     }
 }

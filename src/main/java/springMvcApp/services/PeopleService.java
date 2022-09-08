@@ -3,6 +3,7 @@ package springMvcApp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import springMvcApp.models.Mood;
 import springMvcApp.models.Person;
 import springMvcApp.repositories.PeopleRepository;
 
@@ -32,8 +33,9 @@ public class PeopleService {
     //приоритет выше чем над классом  @Transactional
     @Transactional
     public void save(Person person){
-        peopleRepository.save(person);
+        person.setMood(Mood.CALM);//в поле будет цифровой индекс CALM
         person.setCreatedAt(new Date());
+        peopleRepository.save(person);
     }
     @Transactional
     public void update(int id,Person updPerson){
