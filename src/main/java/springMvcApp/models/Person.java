@@ -42,6 +42,8 @@ public class Person {
     //если EnumType.STRING в бд будет сама строка, в бд поле
     @Enumerated(EnumType.ORDINAL)
     private Mood mood;
+    @Transient //не будет сохраняться в бд, полезно для динамически вычисляемых полей
+    private int something;
     public Person() {
     }
 
