@@ -5,9 +5,9 @@
     <title>Person_id</title>
 </head>
 <body>
-<p th:text="${person.getFio()}"></p>
+<p th:text="${person.getName()}"></p>
 <p th:text="${person.getId()}"></p>
-<p th:text="${person.getYearOfBirth()}"></p>
+<p th:text="${person.getAge()}"></p>
 
 <div th:if="${books.isEmpty()}">
     <p>Person didn't take books</p>

@@ -1,33 +1,39 @@
 package springMvcApp.models;
 
 
-import javax.validation.constraints.Email;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = "Person")
 public class Person {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     @NotEmpty(message = "Should be not empty")
-    private String fio;
-    @Min(value = 1900,message = "Should be greater than 1900")
-    private int yearOfBirth;
+    private String name;
+    @Column(name = "age")
+    @Min(value = 10,message = "Should be greater than 10")
+    private int age;
 
     public Person() {
     }
 
     public Person(int id, String fio, int yearOfBirth) {
         this.id = id;
-        this.fio = fio;
-        this.yearOfBirth = yearOfBirth;
+        this.name = fio;
+        this.age = yearOfBirth;
     }
 
-    public int getYearOfBirth() {
-        return yearOfBirth;
+    public int getAge() {
+        return age;
     }
 
-    public void setYearOfBirth(int age) {
-        this.yearOfBirth = age;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public int getId() {
@@ -38,11 +44,11 @@ public class Person {
         this.id = id;
     }
 
-    public String getFio() {
-        return fio;
+    public String getName() {
+        return name;
     }
 
-    public void setFio(String fio) {
-        this.fio = fio;
+    public void setName(String fio) {
+        this.name = fio;
     }
 }

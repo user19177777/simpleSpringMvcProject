@@ -1,14 +1,22 @@
 package springMvcApp.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-
+@Entity
+@Table(name = "Book")
 public class Book {
-    private int book_id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "title")
     @NotEmpty(message = "Should be not empty")
     private String title;
+    @Column(name = "author")
     @NotEmpty(message = "Should be not empty")
     private String author;
+    @Column(name = "year")
     @Min(value = 1500,message = "Must be more 1500")
     private int year;
 
@@ -16,18 +24,18 @@ public class Book {
     }
 
     public Book(int book_id, String title, String author, int year) {
-        this.book_id = book_id;
+        this.id = book_id;
         this.title = title;
         this.author = author;
         this.year = year;
     }
 
-    public int getBook_id() {
-        return book_id;
+    public int getId() {
+        return id;
     }
 
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
+    public void setId(int book_id) {
+        this.id = book_id;
     }
 
     public String getTitle() {
