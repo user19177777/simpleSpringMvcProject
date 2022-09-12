@@ -8,22 +8,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springMvcApp.dao.PersonDAO;
 import springMvcApp.models.Person;
+import springMvcApp.services.PeopleService;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private final PersonDAO personDAO;
+    private final PeopleService peopleService;
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PeopleController( PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
     //URL такой же /people REST URL
     @GetMapping
     public String index(Model model){
         //получим всех людей из ДАО и передадим в представление
-        model.addAttribute("people",personDAO.index());
+        model.addAttribute("people",peopleService.findAll());
         return "people/index";
     }
     //REST URL
@@ -33,8 +34,8 @@ public class PeopleController {
             @PathVariable("id")int id,
                        Model model){
         //получим одного человека по id из ДАО и передадим в представление
-        model.addAttribute("person",personDAO.show(id));
-        model.addAttribute("books",personDAO.getBooksByPersonId(id));
+        model.addAttribute("person",peopleService.findOne(id));
+        model.addAttribute("books",peopleService.getBookByPersonId(id));
         return "people/show";
     }
     @GetMapping("/new")
@@ -50,13 +51,13 @@ public class PeopleController {
             @ModelAttribute("person")@Valid Person person, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return "people/new";
-        personDAO.save(person);
+        peopleService.save(person);
         return "redirect:/people";
     }
     //показывает форму редактирования
     @GetMapping("/{id}/edit")
     public String edit(Model model,@PathVariable("id")int id){
-        model.addAttribute("person",personDAO.show(id));
+        model.addAttribute("person",peopleService.findOne(id));
         return "people/edit";
     }
     //отправляем отредактированные данные
@@ -64,12 +65,12 @@ public class PeopleController {
     public String update(@ModelAttribute("person")@Valid Person person,BindingResult bindingResult,@PathVariable("id")int id){
         if (bindingResult.hasErrors())
             return "people/edit";
-        personDAO.update(id,person);
+        peopleService.update(id,person);
         return "redirect:/people";
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
-        personDAO.delete(id);
+        peopleService.delete(id);
         return "redirect:/people";
     }
 }
