@@ -4,6 +4,7 @@ package springMvcApp.models;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Table(name = "Person")
@@ -18,6 +19,8 @@ public class Person {
     @Column(name = "age")
     @Min(value = 10,message = "Should be greater than 10")
     private int age;
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
 
     public Person() {
     }
@@ -50,5 +53,13 @@ public class Person {
 
     public void setName(String fio) {
         this.name = fio;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

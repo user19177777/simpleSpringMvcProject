@@ -3,6 +3,8 @@ package springMvcApp.models;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
+
 @Entity
 @Table(name = "Book")
 public class Book {
@@ -19,6 +21,15 @@ public class Book {
     @Column(name = "year")
     @Min(value = 1500,message = "Must be more 1500")
     private int year;
+    @ManyToOne
+    @JoinColumn(name = "person_id",referencedColumnName = "id")
+    private Person owner;
+    @Column(name = "taken_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date takenAt;
+    @Transient
+    //для логики отслеживания даты возврата книги(просрочена или нет)
+    private boolean expired;
 
     public Book() {
     }
@@ -60,5 +71,29 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
+    public Date getTakenAt() {
+        return takenAt;
+    }
+
+    public void setTakenAt(Date takenAt) {
+        this.takenAt = takenAt;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 }
