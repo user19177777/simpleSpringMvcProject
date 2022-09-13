@@ -46,7 +46,7 @@ public class PeopleService {
     }
 
     public Optional<Person> getPersonByFullName(String fullName){
-        return peopleRepository.findByFullName(fullName);
+        return peopleRepository.findByName(fullName);
     }
 
     public List<Book> getBookByPersonId(int id) {

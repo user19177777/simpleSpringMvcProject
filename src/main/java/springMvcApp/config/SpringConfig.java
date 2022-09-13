@@ -27,11 +27,11 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan("springMvcApp")
-//<mvc:annotation-driven/> web.xml
-@EnableWebMvc
 @PropertySource("classpath:hibernate.properties")
+//<mvc:annotation-driven/> web.xml
 @EnableTransactionManagement
 @EnableJpaRepositories("springMvcApp.repositories")
+@EnableWebMvc
 public class SpringConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
 
